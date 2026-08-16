@@ -2,7 +2,8 @@
 
 A personal digital business card built for **תרגיל 1**.
 
-Live site: _add your GitHub Pages URL here_
+Live site: **https://danielosi2001.github.io/digital-business-card/**
+Repository: https://github.com/danielosi2001/digital-business-card
 
 ## Requirements covered
 
@@ -89,7 +90,6 @@ point the `src` in `index.html` at it and set `--photo-grade` to `none`.
 
 ## Before submitting
 
-- **GitHub URL must be real** — it has to point at the repo you actually publish
 - **Check the institution line** — it is a credential claim next to a real name
 - Swap the portrait for a photo if you'd rather, by replacing `assets/profile.svg`
   or pointing the `src` in `index.html` at a new file
