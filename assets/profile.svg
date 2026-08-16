@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-label="Illustrated portrait of Daniel Osi">
+  <defs>
+    <clipPath id="head-shape">
+      <ellipse cx="150" cy="127" rx="52" ry="61"/>
+    </clipPath>
+  </defs>
+
+  <!-- Ground -->
+  <rect width="300" height="300" fill="#15383b"/>
+
+  <!-- Shoulders -->
+  <path d="M150 208 C 94 208, 56 246, 50 300 L 250 300 C 244 246, 206 208, 150 208 Z"
+        fill="#2c7a73"/>
+
+  <!-- Collar notch -->
+  <path d="M132 212 L150 248 L168 212 L159 208 L150 228 L141 208 Z"
+        fill="#15383b"/>
+
+  <!-- Neck, shaded where the jaw falls across it -->
+  <rect x="129" y="166" width="42" height="54" rx="15" fill="#a9b7b3"/>
+
+  <!-- Head: mid tone, then a lit plane offset to the left -->
+  <g clip-path="url(#head-shape)">
+    <rect x="90" y="60" width="120" height="140" fill="#c4cfcc"/>
+    <ellipse cx="139" cy="122" rx="48" ry="58" fill="#e7ebea"/>
+  </g>
+
+  <!-- Hair -->
+  <path d="M98 126 C 98 87, 121 62, 150 62 C 179 62, 202 87, 202 126
+           C 192 105, 174 95, 150 95 C 126 95, 108 105, 98 126 Z"
+        fill="#0b1618"/>
+
+  <!-- Brow line, the only feature — enough to read as a face, not a mask -->
+  <rect x="124" y="122" width="26" height="5" rx="2.5" fill="#0b1618" opacity=".55"/>
+
+  <!-- Ochre accent, worn on the collar -->
+  <rect x="196" y="252" width="26" height="6" rx="3" fill="#b0741b"/>
+</svg>

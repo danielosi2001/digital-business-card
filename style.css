@@ -1,0 +1,676 @@
+/* ============================================================
+   Digital Business Card — Daniel Osi
+   Direction: "Strata" — the page is read the way a stack is
+   built, from the interface at the surface down to the platform.
+   HTML + CSS only. No JavaScript in this project.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. Tokens — LIGHT is the default theme
+   ------------------------------------------------------------ */
+
+:root {
+  --paper:        #e7ebea;
+  --paper-raised: #f3f6f5;
+  --ink:          #0d1c1f;
+  --ink-soft:     #566467;
+  --rule:         #ccd6d4;
+  --teal:         #14706b;
+  --ochre:        #b0741b;
+
+  /* strata deepen as the stack descends */
+  --band-1: #dfeae7;
+  --band-2: #c6dbd6;
+  --band-3: #abcbc4;
+  --band-4: #8ebbb3;
+
+  --photo-grade: grayscale(.45) contrast(1.03);
+
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --space-2xs: .3rem;
+  --space-xs:  .55rem;
+  --space-sm:  .9rem;
+  --space-md:  1.4rem;
+  --space-lg:  2.4rem;
+  --space-xl:  clamp(2.6rem, 5vw, 4rem);
+
+  --radius: 3px;
+  --measure: 62ch;
+
+  color-scheme: light;
+}
+
+
+/* ------------------------------------------------------------
+   2. Dark theme
+   ------------------------------------------------------------
+   The hidden checkbox holds the theme state. :has() lets the root
+   element react to it, so only these tokens are redeclared — not a
+   single component rule below needs to know a theme exists.
+   ------------------------------------------------------------ */
+
+:root:has(#theme-toggle:checked) {
+  --paper:        #0b1618;
+  --paper-raised: #101f22;
+  --ink:          #e4edeb;
+  --ink-soft:     #8ea2a2;
+  --rule:         #223639;
+  --teal:         #55c1b6;
+  --ochre:        #dda23f;
+
+  --band-1: #0e2225;
+  --band-2: #122e31;
+  --band-3: #163b3e;
+  --band-4: #1a494b;
+
+  --photo-grade: grayscale(.5) contrast(.98) brightness(.9);
+
+  color-scheme: dark;
+}
+
+
+/* ------------------------------------------------------------
+   3. Base
+   ------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(.95rem, .92rem + .15vw, 1.02rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .35s ease, color .35s ease;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.15; }
+p          { margin: 0; }
+ul, dl, dd { margin: 0; padding: 0; }
+ul         { list-style: none; }
+img        { display: block; max-width: 100%; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+
+/* ------------------------------------------------------------
+   4. Page shell
+   ------------------------------------------------------------ */
+
+.page {
+  width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 3rem) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.stack-flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+
+/* ------------------------------------------------------------
+   5. Theme switch — a two-position control, not a toy
+   ------------------------------------------------------------ */
+
+/* Hidden from sight but left in the page so it stays keyboard
+   focusable; display:none would drop it out of the focus order. */
+.switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch {
+  align-self: flex-end;
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: border-color .35s ease;
+}
+
+.switch:hover {
+  border-color: var(--teal);
+}
+
+.switch__option {
+  padding: .4rem .75rem;
+  color: var(--ink-soft);
+  background-color: transparent;
+  transition: background-color .35s ease, color .35s ease;
+}
+
+/* Light is active by default; checking the box moves the fill across. */
+.switch__option--light {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+:root:has(#theme-toggle:checked) .switch__option--light {
+  background-color: transparent;
+  color: var(--ink-soft);
+}
+
+:root:has(#theme-toggle:checked) .switch__option--dark {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+/* Ring the visible control when the hidden input takes focus.
+   General sibling (~), not adjacent (+), because .progress sits between. */
+.switch__input:focus-visible ~ .page .switch {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+
+/* ------------------------------------------------------------
+   6. Masthead — the type is the hero, the photo is support
+   ------------------------------------------------------------ */
+
+.masthead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--rule);
+  transition: border-color .35s ease;
+}
+
+.masthead__name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.9rem, 1.4rem + 6.4vw, 5.6rem);
+  line-height: .9;
+  letter-spacing: -.035em;
+}
+
+.masthead__role {
+  margin-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  transition: color .35s ease;
+}
+
+.masthead__lede {
+  margin-top: var(--space-sm);
+  max-width: 34ch;
+  color: var(--ink-soft);
+  font-size: .95rem;
+  transition: color .35s ease;
+}
+
+.masthead__photo {
+  flex: 0 0 auto;
+  width: clamp(88px, 16vw, 150px);
+  height: clamp(88px, 16vw, 150px);
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+  filter: var(--photo-grade);
+  transition: filter .45s ease, border-color .35s ease;
+}
+
+.masthead__photo:hover {
+  filter: none;
+  border-color: var(--teal);
+}
+
+
+/* ------------------------------------------------------------
+   7. Section labels
+   ------------------------------------------------------------ */
+
+.eyebrow {
+  margin-bottom: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--teal);
+  transition: color .35s ease;
+}
+
+.lead {
+  max-width: var(--measure);
+  color: var(--ink-soft);
+  transition: color .35s ease;
+}
+
+
+/* ------------------------------------------------------------
+   8. Selected work
+   ------------------------------------------------------------
+   auto-fit + minmax gives one column on a phone and two on a wide
+   screen with no media query; min() stops the track ever exceeding
+   the viewport on very narrow devices.
+   ------------------------------------------------------------ */
+
+.work {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-sm);
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  transition: background-color .35s ease, border-color .25s ease;
+}
+
+.project:hover {
+  border-color: var(--teal);
+}
+
+/* An odd final card would otherwise leave a hole in the grid —
+   let it run the full width instead. */
+.project:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.project__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+.project__summary {
+  flex-grow: 1;
+  font-size: .88rem;
+  color: var(--ink-soft);
+  transition: color .35s ease;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-top: var(--space-2xs);
+}
+
+.tags__item {
+  padding: .12rem .45rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--teal);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  transition: color .35s ease, border-color .35s ease;
+}
+
+
+/* ------------------------------------------------------------
+   9. The stack — signature element
+   ------------------------------------------------------------
+   Bands sit flush so they read as one continuous section cut,
+   and darken with depth. The order is information: interface at
+   the surface, platform at the base.
+   ------------------------------------------------------------ */
+
+.strata {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .35s ease;
+}
+
+.stratum {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  transition: background-color .35s ease, padding-left .25s ease;
+}
+
+.stratum:hover {
+  padding-left: calc(var(--space-md) + 6px);
+}
+
+.stratum--1 { background-color: var(--band-1); }
+.stratum--2 { background-color: var(--band-2); }
+.stratum--3 { background-color: var(--band-3); }
+.stratum--4 { background-color: var(--band-4); }
+
+/* Leadership work is not a layer — it runs through all of them,
+   so it is drawn as an open band rather than a solid one. */
+.stratum--across {
+  background-color: transparent;
+  border-top: 1px dashed var(--rule);
+}
+
+.stratum__layer {
+  flex: 0 0 7.5rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: .65;
+}
+
+.stratum__items {
+  font-size: .9rem;
+}
+
+
+/* ------------------------------------------------------------
+   10. Education
+   ------------------------------------------------------------ */
+
+.education {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.education__row {
+  display: flex;
+  gap: var(--space-md);
+  align-items: baseline;
+}
+
+.education__when {
+  flex: 0 0 7.5rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+  transition: color .35s ease;
+}
+
+.education__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.education__where {
+  margin-top: var(--space-2xs);
+  font-size: .88rem;
+  color: var(--ink-soft);
+  transition: color .35s ease;
+}
+
+
+/* ------------------------------------------------------------
+   11. Contact
+   ------------------------------------------------------------ */
+
+.contact {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.contact__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--rule);
+  transition: border-color .35s ease;
+}
+
+.contact__row:last-child {
+  border-bottom: none;
+}
+
+.contact__key {
+  flex: 0 0 5.5rem;
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color .35s ease;
+}
+
+.contact__value {
+  font-size: .95rem;
+  word-break: break-word;
+  border-bottom: 1px solid transparent;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.contact__value:hover {
+  color: var(--ochre);
+  border-bottom-color: var(--ochre);
+}
+
+.colophon {
+  margin-top: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: .7;
+  transition: color .35s ease;
+}
+
+
+/* ------------------------------------------------------------
+   12. Load sequence — one orchestrated entrance, then stillness
+   ------------------------------------------------------------ */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.switch,
+.masthead,
+.stack-flow > .block,
+.page > .block {
+  animation: rise .65s cubic-bezier(.2, .7, .3, 1) backwards;
+}
+
+.switch                           { animation-delay: .30s; }
+.masthead                         { animation-delay: .04s; }
+.stack-flow > .block:nth-child(1) { animation-delay: .12s; }
+.stack-flow > .block:nth-child(2) { animation-delay: .18s; }
+.stack-flow > .block:nth-child(3) { animation-delay: .24s; }
+.page > .block                    { animation-delay: .30s; }
+
+
+/* ------------------------------------------------------------
+   13. Scroll-driven animation — still no JavaScript
+   ------------------------------------------------------------
+   animation-timeline replaces the clock that drives an animation
+   with the scroll position itself:
+
+     scroll()  progress of the scroll container, 0% to 100%
+     view()    progress of *this element* crossing the viewport
+
+   Everything is wrapped in @supports so a browser without the
+   feature simply keeps the load animation above and never hides
+   any content.
+   ------------------------------------------------------------ */
+
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background-color: var(--teal);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 10;
+  transition: background-color .35s ease;
+}
+
+@keyframes scrub {
+  to { transform: scaleX(1); }
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Each band settles into place as it comes into view, so the stack
+   appears to be deposited layer by layer on the way down. */
+@keyframes deposit {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    .progress {
+      animation: scrub linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    /* Sections now react to scroll rather than to page load. */
+    .stack-flow > .block,
+    .page > .block {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 26%;
+      animation-delay: 0s;
+    }
+
+    .stratum {
+      animation: deposit linear both;
+      animation-timeline: view();
+    }
+
+    .stratum--1 { animation-range: entry 0%  cover 20%; }
+    .stratum--2 { animation-range: entry 2%  cover 24%; }
+    .stratum--3 { animation-range: entry 4%  cover 28%; }
+    .stratum--4 { animation-range: entry 6%  cover 32%; }
+    .stratum--across { animation-range: entry 8% cover 36%; }
+  }
+}
+
+
+/* ------------------------------------------------------------
+   14. Narrow screens
+   ------------------------------------------------------------ */
+
+@media (max-width: 620px) {
+  .masthead {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .masthead__lede {
+    max-width: none;
+  }
+
+  .stratum {
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .stratum__layer {
+    flex-basis: auto;
+  }
+
+  .contact__key {
+    flex-basis: 100%;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   15. Motion preferences
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   16. Print — a business card should survive being printed
+   ------------------------------------------------------------ */
+
+@media print {
+  .switch,
+  .progress {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  /* Scroll and load animations have no meaning on paper. */
+  .masthead,
+  .block,
+  .stratum {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .project,
+  .stratum,
+  .education__row {
+    break-inside: avoid;
+  }
+}
