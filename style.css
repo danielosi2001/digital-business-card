@@ -7,6 +7,39 @@
 
 
 /* ------------------------------------------------------------
+   0. Fonts — self-hosted
+   ------------------------------------------------------------
+   Served from this repo rather than a CDN, so the page renders
+   identically offline and has no third-party dependency. Each
+   file is a variable font covering the weight range it declares.
+   ------------------------------------------------------------ */
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("assets/fonts/bricolage-grotesque.woff2") format("woff2");
+  font-weight: 500 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Public Sans";
+  src: url("assets/fonts/public-sans.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("assets/fonts/jetbrains-mono.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ------------------------------------------------------------
    1. Tokens — LIGHT is the default theme
    ------------------------------------------------------------ */
 
