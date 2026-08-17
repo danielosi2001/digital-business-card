@@ -3,17 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Daniel Osi — Lead Full-Stack Developer. Schema to pixel.">
-  <meta name="author" content="Daniel Osi">
-  <title>Daniel Osi — Lead Full-Stack Developer</title>
-
-  <meta property="og:type" content="profile">
-  <meta property="og:title" content="Daniel Osi — Lead Full-Stack Developer">
-  <meta property="og:description" content="Schema to pixel — I build across the whole stack, and lead the people building it.">
-  <meta property="og:image" content="assets/profile.jpg">
-  <meta name="twitter:card" content="summary">
+  <title>Daniel Osi — DevOps Team Lead</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +13,6 @@
   <div class="progress" aria-hidden="true"></div>
 
   <div class="page">
-
     <label for="theme-toggle" class="switch" title="Switch between light and dark mode">
       <span class="switch__option switch__option--light">Light</span>
       <span class="switch__option switch__option--dark">Dark</span>
@@ -31,9 +21,9 @@
     <header class="masthead">
       <div class="masthead__text">
         <h1 class="masthead__name">Daniel&nbsp;Osi</h1>
-        <p class="masthead__role">Lead Full-Stack Developer</p>
+        <p class="masthead__role">DevOps Team Lead</p>
         <p class="masthead__lede">
-          Schema to pixel — I build across the whole stack, and lead the people building it.
+          Schema to pixel to production.
         </p>
       </div>
 
@@ -50,13 +40,12 @@
       <section class="block" aria-labelledby="about-heading">
         <h2 class="eyebrow" id="about-heading">About</h2>
         <p class="lead">
-          I'm a full-stack developer and team lead who likes owning the whole path from
-          database schema to the last pixel. Over the past few years I've moved from writing
-          features to shaping how a small team builds them: reviewing code, breaking large
-          problems into pieces that can actually ship, and keeping the moving parts talking
-          to each other. What I care about most is code that's still readable a year after
-          it was written. Outside of work I'm usually reading about distributed systems, or
-          rebuilding something that already worked fine.
+          I'm a full-stack developer who now leads a DevOps team. Four years building
+          product end to end &mdash; the last year and a half in Next.js and TypeScript &mdash;
+          before moving to the side of the stack that decides whether any of it reaches
+          users. The range is the useful part: I've built the features and I've built the
+          pipelines that ship them, so I know what each layer needs from the one under it.
+          I started out as a developer in the IDF's Shachar unit.
         </p>
       </section>
 
@@ -66,43 +55,17 @@
         <div class="work">
 
           <article class="project">
-            <h3 class="project__name">Mesh</h3>
+            <h3 class="project__name">SHRAGA</h3>
             <p class="project__summary">
-              Internal service dashboard that pulls health, deploy status, and ownership for
-              40+ microservices into one view. Cut the average &ldquo;who owns this?&rdquo;
-              question from hours to seconds.
+              Developers on a closed network can't reach public package registries,
+              documentation, or tooling. SHRAGA makes that catalogue discoverable and
+              obtainable inside the network, and doubles as the central directory for
+              every internal system &mdash; one place to find both the software you need
+              and the system you're looking for.
             </p>
             <ul class="tags">
               <li class="tags__item">React</li>
-              <li class="tags__item">Node.js</li>
-              <li class="tags__item">PostgreSQL</li>
-              <li class="tags__item">Docker</li>
-            </ul>
-          </article>
-
-          <article class="project">
-            <h3 class="project__name">Currents</h3>
-            <p class="project__summary">
-              Real-time collaborative editor with conflict-free multi-user editing and
-              presence indicators. Holds around 200 concurrent sessions on a single node.
-            </p>
-            <ul class="tags">
-              <li class="tags__item">WebSockets</li>
-              <li class="tags__item">Redis</li>
               <li class="tags__item">TypeScript</li>
-            </ul>
-          </article>
-
-          <article class="project">
-            <h3 class="project__name">Ledgerline</h3>
-            <p class="project__summary">
-              Expense-splitting app for shared households. Settles debts in the fewest
-              possible transactions using a greedy balancing algorithm.
-            </p>
-            <ul class="tags">
-              <li class="tags__item">Next.js</li>
-              <li class="tags__item">Prisma</li>
-              <li class="tags__item">Tailwind</li>
             </ul>
           </article>
 
@@ -115,7 +78,7 @@
         <dl class="strata">
           <div class="stratum stratum--1">
             <dt class="stratum__layer">Interface</dt>
-            <dd class="stratum__items">React &middot; TypeScript &middot; HTML &amp; CSS &middot; Tailwind</dd>
+            <dd class="stratum__items">React &middot; Next.js &middot; TypeScript</dd>
           </div>
 
           <div class="stratum stratum--2">
@@ -130,15 +93,43 @@
 
           <div class="stratum stratum--4">
             <dt class="stratum__layer">Platform</dt>
-            <dd class="stratum__items">Docker &middot; GitHub Actions &middot; AWS</dd>
+            <dd class="stratum__items">Docker &middot; Kubernetes &middot; CI/CD</dd>
           </div>
 
           <div class="stratum stratum--across">
             <dt class="stratum__layer">Throughout</dt>
-            <dd class="stratum__items">Code review &middot; Git workflows &middot; Agile &middot; Mentoring</dd>
+            <dd class="stratum__items">Team leadership &middot; Code review &middot; Git workflows &middot; Mentoring</dd>
           </div>
 
         </dl>
+      </section>
+
+      <section class="block" aria-labelledby="experience-heading">
+        <h2 class="eyebrow" id="experience-heading">Experience</h2>
+
+        <ul class="experience">
+          <li class="experience__row">
+            <span class="experience__when">Current</span>
+            <div class="experience__what">
+              <h3 class="experience__title">DevOps Team Lead</h3>
+              <p class="experience__where">Lead the team that owns CI/CD, infrastructure, and the tooling other developers build on.</p>
+            </div>
+          </li>
+          <li class="experience__row">
+            <span class="experience__when">Previously</span>
+            <div class="experience__what">
+              <h3 class="experience__title">Full-Stack Developer</h3>
+              <p class="experience__where">Built and shipped product across the stack in React, Next.js, and TypeScript.</p>
+            </div>
+          </li>
+          <li class="experience__row">
+            <span class="experience__when">Military</span>
+            <div class="experience__what">
+              <h3 class="experience__title">Software Developer</h3>
+              <p class="experience__where">IDF, Shachar unit &middot; Where I started writing software professionally.</p>
+            </div>
+          </li>
+        </ul>
       </section>
 
       <section class="block" aria-labelledby="education-heading">
@@ -174,7 +165,7 @@
         </li>
         <li class="contact__row">
           <span class="contact__key">Phone</span>
-          <a class="contact__value" href="tel:+972532708086">+972 54-812-3390</a>
+          <a class="contact__value" href="tel:+972532708086">+972 53-270-8086</a>
         </li>
         <li class="contact__row">
           <span class="contact__key">GitHub</span>

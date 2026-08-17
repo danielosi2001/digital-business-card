@@ -10,13 +10,13 @@ Repository: https://github.com/danielosi2001/digital-business-card
 | Requirement | Where |
 |---|---|
 | Full name and role | `.masthead` |
-| Profile picture | `assets/profile.svg` (replace with your own) |
+| Profile picture | `assets/profile.jpg` |
 | Short paragraph about me | About section |
 | GitHub link | Contact section |
 | LinkedIn link | Contact section |
 | Phone number | Contact section (`tel:` link) |
 | Email address | Contact section (`mailto:` link) |
-| Dark / light mode toggle | Hidden checkbox + `:has()` — `style.css` §2, §5 |
+| Dark / light mode toggle | Hidden checkbox + `:has()` in `style.css` |
 | Responsive layout | `clamp()`, CSS grid `auto-fit`, one media query at 620px |
 | Semantic HTML | `header`, `main`, `section`, `article`, `dl`, `footer` |
 | External stylesheet | `style.css` — no inline styles in the HTML |
@@ -68,22 +68,19 @@ digital-business-card/
     └── favicon.svg
 ```
 
-## Mock data
+## Content status
 
-The assignment states that content need not be real — the emphasis is on
-implementation and design. Everything below is invented and safe to keep, edit,
-or replace:
+Most of the card is now real. What is still stand-in:
 
-| Field | Current value |
+| Field | Status |
 |---|---|
-| Email | `daniel@osi.dev` |
-| Phone | `+972 54-812-3390` |
-| GitHub | `github.com/danielosi2001` — real account |
-| LinkedIn | `linkedin.com/in/danielosi` |
-| Institution | Holon Institute of Technology |
-| Course | Coding Academy |
-| Projects | Mesh, Currents, Ledgerline |
-| Portrait | `assets/profile.jpg` — GAN-generated face; no real person |
+| Name, role, about | Real |
+| Experience | Real — company names and dates not yet added |
+| SHRAGA | Real — tech stack listed is partial |
+| Contact (email, phone, GitHub, LinkedIn) | Real |
+| Education | **Unverified** — institution and course are placeholders |
+| The stack: Application, Data rows | **Unverified** — carried over from the draft |
+| Portrait | Synthetic. `assets/profile.jpg` is a GAN-generated face, not a real person |
 
 `assets/profile.svg` is kept as an illustrated alternative. To use it instead,
 point the `src` in `index.html` at it and set `--photo-grade` to `none`.
