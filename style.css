@@ -432,17 +432,6 @@ a {
   border-bottom-color: var(--ochre);
 }
 
-.colophon {
-  margin-top: var(--space-lg);
-  font-family: var(--font-mono);
-  font-size: .62rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  opacity: .7;
-  transition: color .35s ease;
-}
-
 @keyframes rise {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
@@ -495,11 +484,13 @@ a {
       animation-timeline: scroll(root block);
     }
 
+    /* ends inside the entry range so the last block on the page, which never
+       scrolls far enough to reach a cover range, still finishes revealing */
     .stack-flow > .block,
     .page > .block {
       animation: reveal linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 26%;
+      animation-range: entry 0% entry 60%;
       animation-delay: 0s;
     }
 
@@ -508,11 +499,11 @@ a {
       animation-timeline: view();
     }
 
-    .stratum--1 { animation-range: entry 0%  cover 20%; }
-    .stratum--2 { animation-range: entry 2%  cover 24%; }
-    .stratum--3 { animation-range: entry 4%  cover 28%; }
-    .stratum--4 { animation-range: entry 6%  cover 32%; }
-    .stratum--across { animation-range: entry 8% cover 36%; }
+    .stratum--1 { animation-range: entry 0%  entry 50%; }
+    .stratum--2 { animation-range: entry 4%  entry 56%; }
+    .stratum--3 { animation-range: entry 8%  entry 62%; }
+    .stratum--4 { animation-range: entry 12% entry 68%; }
+    .stratum--across { animation-range: entry 16% entry 74%; }
   }
 }
 
